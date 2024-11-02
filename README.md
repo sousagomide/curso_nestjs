@@ -25,3 +25,16 @@
     nest new <i>nome_aplicacao</i>
 </code>
 
+<br/>Escolha a opção:
+<ul>
+    <li>npm</li>
+</ul>
+
+<h1>Rodar o servidor</h1>
+
+<code>
+    npm run start
+</code>
+
+<br/>Host: <code>localhost:3000</code>
+
