@@ -13,6 +13,12 @@
     npm install -g @nestjs/cli
 </code>
 
+Testando a instalação
+
+<code>
+    nest --version
+</code>
+
 <h1>Criando o primeiro projeto</h1>
 
 
