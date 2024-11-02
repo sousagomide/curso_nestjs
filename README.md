@@ -19,7 +19,9 @@
     nest --version
 </code>
 
-<h1>Criando o primeiro projeto</h1>
+<h1>Criar uma nova aplicação</h1>
 
-
+<code>
+    nest new <i>nome_aplicacao</i>
+</code>
 
