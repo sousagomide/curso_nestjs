@@ -22,7 +22,7 @@
 <h1>Criar uma nova aplicação</h1>
 
 <code>
-    nest new <i>nome_aplicacao</i>
+    nest new <i>nome_aplicacao</i> --skip-git
 </code>
 
 <br/>Escolha a opção:
