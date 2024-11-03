@@ -7,7 +7,8 @@
     <li>NPM</li>
 </ul>
 
-<h1>Instalar o NestJS CLI</h1>
+<h1>Instalar o NestJS CLI
+</h1>
 
 <code>
     npm install -g @nestjs/cli

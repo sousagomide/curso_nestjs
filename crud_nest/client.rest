@@ -1,0 +1,19 @@
+@baseUrl = http://localhost:3000
+
+### RecadosControllerFindAll
+# @name RecadosControllerFindAll
+GET {{baseUrl}}/recados/
+
+### RecadosControllerFindOne
+# @name RecadosControllerFindOne
+GET {{baseUrl}}/recados/69
+
+### RecadosControllerCreate
+# @name RecadosControllerCreate
+POST {{baseUrl}}/recados/
+Content-Type: application/json
+
+{
+    "recado": "Fazer a feira na terça-feira",
+    "data": "2024-11-05"
+}
