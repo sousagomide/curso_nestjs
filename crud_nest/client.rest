@@ -3,10 +3,12 @@
 ### RecadosControllerFindAll
 # @name RecadosControllerFindAll
 GET {{baseUrl}}/recados/
+# ?limit=10
+# &offset=10
 
 ### RecadosControllerFindOne
 # @name RecadosControllerFindOne
-GET {{baseUrl}}/recados/69
+GET {{baseUrl}}/recados/1
 
 ### RecadosControllerCreate
 # @name RecadosControllerCreate
@@ -14,6 +16,26 @@ POST {{baseUrl}}/recados/
 Content-Type: application/json
 
 {
-    "recado": "Fazer a feira na terça-feira",
-    "data": "2024-11-05"
+    "texto": "Novo Recado",
+    "de": "Denecley Alvim",
+    "para": "Nanaxara",
+    "lido": false,
+    "data": "2024-11-03T16:22:40.421Z"
 }
+
+### RecadosControllerUpdate
+# @name RecadosControllerUpdate
+PATCH  {{baseUrl}}/recados/2
+Content-Type: application/json
+
+{
+    "texto": "Novo Recado",
+    "de": "Denecley Alvim",
+    "para": "Nanaxara",
+    "lido": true,
+    "data": "2024-11-03T16:22:40.421Z"
+}
+
+### RecadosControllerRemove
+# @name RecadosControllerRemove
+DELETE {{baseUrl}}/recados/2

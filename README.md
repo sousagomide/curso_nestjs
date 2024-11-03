@@ -18,7 +18,9 @@
 
 <ul>
     <li>REST Client</li>
-    <li></li>
+    <li>Reload</li>
+	<li>ESLint</li>
+	<li>Prettier - Code formatter</li>
 </ul>
 
 <br/>Testando a instalação
