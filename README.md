@@ -54,16 +54,18 @@
 
 <h1>Bibliotecas instaladas</h1>
 
-<table>
-	<tr>
-		<td>Descrição</td>
-		<td>Instalação</td>
-	</tr>
-	<tr>
-		<td>Trabalha com validação e transformação de dados</td>
-		<td><code>npm i class-validator class-transformer</code></td>
-	</tr>
-</table>
+<center>
+	<table>
+		<tr>
+			<td>Descrição</td>
+			<td>Instalação</td>
+		</tr>
+		<tr>
+			<td>Trabalha com validação e transformação de dados</td>
+			<td><code>npm i class-validator class-transformer</code></td>
+		</tr>
+	</table>
+</center>
 
 
 
