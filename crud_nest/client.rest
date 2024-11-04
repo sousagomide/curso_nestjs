@@ -8,7 +8,7 @@ GET {{baseUrl}}/recados/
 
 ### RecadosControllerFindOne
 # @name RecadosControllerFindOne
-GET {{baseUrl}}/recados/1
+GET {{baseUrl}}/recados/2
 
 ### RecadosControllerCreate
 # @name RecadosControllerCreate

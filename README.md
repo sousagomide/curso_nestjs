@@ -52,6 +52,21 @@
 
 <br/>Host: <code>localhost:3000</code>
 
+<h1>Bibliotecas instaladas</h1>
+
+<table>
+	<tr>
+		<td>Descrição</td>
+		<td>Instalação</td>
+	</tr>
+	<tr>
+		<td>Trabalha com validação e transformação de dados</td>
+		<td><code>npm i class-validator class-transformer</code></td>
+	</tr>
+</table>
+
+
+
 <h1>Criar um módulo</h1>
 
 <code>
@@ -68,4 +83,10 @@
 
 <code>
     nest generate service <i>nome_service</i> --no-spec
+</code>
+
+<h1>Criar um DTO</h1>
+
+<code>
+    nest generate class <i>path/nome_service.dto</i> --no-spec --flat
 </code>
