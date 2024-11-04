@@ -54,7 +54,7 @@
 
 <h1>Bibliotecas instaladas</h1>
 
-<div style="width:100%;margin: 0 auto;">
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
 	<table>
 		<tr>
 			<td>Descrição</td>
@@ -65,7 +65,7 @@
 			<td><code>npm i class-validator class-transformer</code></td>
 		</tr>
 	</table>
-<div>
+</div>
 
 
 
