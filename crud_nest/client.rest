@@ -9,7 +9,7 @@ GET {{baseUrl}}/recados/
 
 ### RecadosControllerFindOne
 # @name RecadosControllerFindOne
-GET {{baseUrl}}/recados/2
+GET {{baseUrl}}/recados/7
 
 ### RecadosControllerCreate
 # @name RecadosControllerCreate
@@ -18,8 +18,8 @@ Content-Type: application/json
 
 {
     "texto": "Prova de Programação Básica",
-    "de": "Rodrigo Gomide",
-    "para": "Rodrigo Gomide"
+    "deId": 6,
+    "paraId": 2
 }
 
 ### RecadosControllerUpdate
@@ -53,7 +53,21 @@ POST {{baseUrl}}/{{rota_pessoa}}/
 Content-Type: application/json
 
 {
-    "nome": "Renato Gomide",
-    "email": "renato.gomide@ifgoiano.edu.br",
+    "nome": "Rodrigo Gomide",
+    "email": "rodrigo.gomide@ifgoiano.edu.br",
     "password": "123456"
 }
+
+### PessoasControllerUpdate
+# @name PessoasControllerUpdate
+PATCH  {{baseUrl}}/{{rota_pessoa}}/2
+Content-Type: application/json
+
+{
+    "nome": "TESTE",
+    "password": "TESTE"
+}
+
+### PessoasControllerRemove
+# @name PessoasControllerRemove
+DELETE {{baseUrl}}/{{rota_pessoa}}/2
