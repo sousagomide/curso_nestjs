@@ -1,5 +1,6 @@
 @baseUrl = http://localhost:3000
 
+# RECADOS
 ### RecadosControllerFindAll
 # @name RecadosControllerFindAll
 GET {{baseUrl}}/recados/
@@ -16,11 +17,9 @@ POST {{baseUrl}}/recados/
 Content-Type: application/json
 
 {
-    "texto": "Novo Recado",
-    "de": "Denecley Alvim",
-    "para": "Nanaxara",
-    "lido": false,
-    "data": "2024-11-03T16:22:40.421Z"
+    "texto": "Prova de Programação Básica",
+    "de": "Rodrigo Gomide",
+    "para": "Rodrigo Gomide"
 }
 
 ### RecadosControllerUpdate
@@ -29,13 +28,32 @@ PATCH  {{baseUrl}}/recados/2
 Content-Type: application/json
 
 {
-    "texto": "Novo Recado",
-    "de": "Denecley Alvim",
-    "para": "Nanaxara",
-    "lido": true,
-    "data": "2024-11-03T16:22:40.421Z"
+    "para": "TESTE"
 }
 
 ### RecadosControllerRemove
 # @name RecadosControllerRemove
-DELETE {{baseUrl}}/recados/2
+DELETE {{baseUrl}}/recados/3
+
+# PESSOAS
+@rota_pessoa = pessoas
+### PessoasControllerFindAll
+# @name PessoasControllerFindAll
+GET {{baseUrl}}/{{rota_pessoa}}/
+# ?limit=10
+# &offset=10
+
+### PessoasControllerFindOne
+# @name PessoasControllerFindOne
+GET {{baseUrl}}/{{rota_pessoa}}/2
+
+### PessoasControllerCreate
+# @name PessoasControllerCreate
+POST {{baseUrl}}/{{rota_pessoa}}/
+Content-Type: application/json
+
+{
+    "nome": "Renato Gomide",
+    "email": "renato.gomide@ifgoiano.edu.br",
+    "password": "123456"
+}

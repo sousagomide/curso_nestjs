@@ -64,6 +64,14 @@
 			<td>Trabalha com validação e transformação de dados</td>
 			<td><code>npm i class-validator class-transformer</code></td>
 		</tr>
+		<tr>
+			<td>Usado para otimizar os validators</td>
+			<td><code>npm i @nestjs/mapped-types</code></td>
+		</tr>
+		<tr>
+			<td>Instalação do ORM e a biblioteca do postgresql</td>
+			<td><code>npm i @nestjs/typeorm typeorm pg</code></td>
+		</tr>
 	</table>
 </div>
 
@@ -92,3 +100,14 @@
 <code>
     nest generate class <i>path/nome_service.dto</i> --no-spec --flat
 </code>
+
+<h1>Criar um CRUD</h1>
+
+<code>
+    nest generate resource pessoas --no-spec
+</code>
+<br/>Escolha a opção:
+<ul>
+    <li>REST API</li>
+	<li>CRUD entry points? Y</li>
+</ul>
