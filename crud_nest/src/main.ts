@@ -1,6 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { ParseIntIdPipe } from './common/pipes/parse-int-id.pipe';
+import { AddHeaderInterceptor } from './common/interceptors/add-header.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -13,7 +15,11 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
       transform: false,
     }),
+    new ParseIntIdPipe()
   );
+  // app.useGlobalInterceptors(
+  //   new AddHeaderInterceptor()
+  // );
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

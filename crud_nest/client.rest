@@ -9,7 +9,7 @@ GET {{baseUrl}}/recados/
 
 ### RecadosControllerFindOne
 # @name RecadosControllerFindOne
-GET {{baseUrl}}/recados/7
+GET {{baseUrl}}/recados/9
 
 ### RecadosControllerCreate
 # @name RecadosControllerCreate
@@ -24,7 +24,7 @@ Content-Type: application/json
 
 ### RecadosControllerUpdate
 # @name RecadosControllerUpdate
-PATCH  {{baseUrl}}/recados/9
+PATCH  {{baseUrl}}/recados/10
 Content-Type: application/json
 
 {

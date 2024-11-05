@@ -8,13 +8,19 @@ import {
   Patch,
   Post,
   Query,
+  UseInterceptors,
+  UsePipes,
 } from '@nestjs/common';
 import { RecadosService } from './recados.service';
 import { CreateRecadoDto } from './dto/create-recado.dto';
 import { UpdateRecadoDto } from './dto/update-recado.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { ParseIntIdPipe } from 'src/common/pipes/parse-int-id.pipe';
+import { AddHeaderInterceptor } from 'src/common/interceptors/add-header.interceptor';
 
 @Controller('recados')
+@UseInterceptors(AddHeaderInterceptor) //Pode ser usado no método
+//@UsePipes(ParseIntIdPipe)
 export class RecadosController {
   constructor(private readonly recadosService: RecadosService) {}
   //   @HttpCode(201)
@@ -25,7 +31,7 @@ export class RecadosController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
+    findOne(@Param('id') id: number) {
     return this.recadosService.findOne(id);
   }
 
@@ -35,12 +41,12 @@ export class RecadosController {
   }
 
   @Patch(':id')
-  update(@Param('id', ParseIntPipe) id: number, @Body() body: UpdateRecadoDto) {
+  update(@Param('id') id: number, @Body() body: UpdateRecadoDto) {
     return this.recadosService.update(id, body);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
+  remove(@Param('id') id: number) {
     return this.recadosService.remove(id);
   }
 }
