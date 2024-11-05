@@ -4,8 +4,8 @@
 ### RecadosControllerFindAll
 # @name RecadosControllerFindAll
 GET {{baseUrl}}/recados/
-# ?limit=10
-# &offset=10
+?limit=10
+&offset=0
 
 ### RecadosControllerFindOne
 # @name RecadosControllerFindOne
@@ -17,18 +17,18 @@ POST {{baseUrl}}/recados/
 Content-Type: application/json
 
 {
-    "texto": "Prova de Programação Básica",
-    "deId": 6,
-    "paraId": 2
+    "texto": "Olá, tudo bem? Está ocupada?",
+    "deId": 7,
+    "paraId": 8
 }
 
 ### RecadosControllerUpdate
 # @name RecadosControllerUpdate
-PATCH  {{baseUrl}}/recados/2
+PATCH  {{baseUrl}}/recados/9
 Content-Type: application/json
 
 {
-    "para": "TESTE"
+    "lido": true
 }
 
 ### RecadosControllerRemove
@@ -53,8 +53,8 @@ POST {{baseUrl}}/{{rota_pessoa}}/
 Content-Type: application/json
 
 {
-    "nome": "Rodrigo Gomide",
-    "email": "rodrigo.gomide@ifgoiano.edu.br",
+    "nome": "Rafaela do Vale Santos Gomide",
+    "email": "valegomide@gmail.com",
     "password": "123456"
 }
 
@@ -70,4 +70,4 @@ Content-Type: application/json
 
 ### PessoasControllerRemove
 # @name PessoasControllerRemove
-DELETE {{baseUrl}}/{{rota_pessoa}}/2
+DELETE {{baseUrl}}/{{rota_pessoa}}/6

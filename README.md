@@ -1,5 +1,12 @@
 # Curso de NestJS
 
+<h1>Sites Recomendados</h1>
+
+<ul>
+    <li><a href="https://typeorm.io/" target="blank">TypeORM</a></li>
+    <li><a href="https://docs.nestjs.com/techniques/database" target="blank">Database</a></li>
+</ul>
+
 <h1>Requerimentos</h1>
 
 <ul>

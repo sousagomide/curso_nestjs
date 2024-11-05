@@ -7,10 +7,12 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { RecadosService } from './recados.service';
 import { CreateRecadoDto } from './dto/create-recado.dto';
 import { UpdateRecadoDto } from './dto/update-recado.dto';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Controller('recados')
 export class RecadosController {
@@ -18,11 +20,8 @@ export class RecadosController {
   //   @HttpCode(201)
   //   @HttpCode(HttpStatus.CREATED)
   @Get()
-  findAll() {
-    //findAll(@Query() pagination: any) {
-    //const { limit = 10, offset = 0 } = pagination;
-    //return `Essa rota retorna todos os recados. Limit=${limit} e Offset=${offset}`;
-    return this.recadosService.findAll();
+  findAll(@Query() paginationDto: PaginationDto) {
+    return this.recadosService.findAll(paginationDto);
   }
 
   @Get(':id')
