@@ -12,31 +12,31 @@ export class RecadosService {
   constructor(
     @InjectRepository(Recado)
     private readonly recadoRepository: Repository<Recado>,
-    private readonly pessoasService: PessoasService
+    private readonly pessoasService: PessoasService,
   ) {}
 
   async findAll(paginationDto?: PaginationDto) {
-    const {limit = 10, offset = 0} = paginationDto;
+    const { limit = 10, offset = 0 } = paginationDto;
     const recados = await this.recadoRepository.find({
       take: limit,
       skip: offset,
       relations: ['de', 'para'],
       select: {
-        de: {id: true, nome: true},
-        para: {id: true, nome: true}
-      }
+        de: { id: true, nome: true },
+        para: { id: true, nome: true },
+      },
     });
     return recados;
   }
 
   async findOne(id: number) {
-    const recado = await this.recadoRepository.findOne({ 
+    const recado = await this.recadoRepository.findOne({
       where: { id },
       relations: ['de', 'para'],
       select: {
-        de: {id: true, nome: true},
-        para: {id: true, nome: true}
-      } 
+        de: { id: true, nome: true },
+        para: { id: true, nome: true },
+      },
     });
     if (recado) return recado;
     // throw new HttpException('Recado não encontrado.', HttpStatus.NOT_FOUND)
@@ -44,24 +44,24 @@ export class RecadosService {
   }
 
   async create(createRecadoDto: CreateRecadoDto) {
-    const {deId, paraId} = createRecadoDto;
+    const { deId, paraId } = createRecadoDto;
     const de = await this.pessoasService.findOne(deId);
     const para = await this.pessoasService.findOne(paraId);
-    
-    const newRecado = { 
-      texto: createRecadoDto.texto, 
-      lido: false, 
+
+    const newRecado = {
+      texto: createRecadoDto.texto,
+      lido: false,
       data: new Date(),
       de,
-      para
+      para,
     };
     const recado = this.recadoRepository.create(newRecado);
     await this.recadoRepository.save(recado);
     return {
       ...recado,
-      de: {id: recado.de.id},
-      para: {id: recado.para.id}
-    }
+      de: { id: recado.de.id },
+      para: { id: recado.para.id },
+    };
   }
 
   async update(id: number, updateRecadoDto: UpdateRecadoDto) {

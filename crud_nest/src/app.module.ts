@@ -1,4 +1,6 @@
-import { Module } from '@nestjs/common';
+import {
+  Module
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RecadosModule } from './recados/recados.module';
@@ -21,6 +23,28 @@ import { PessoasModule } from './pessoas/pessoas.module';
     PessoasModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    // {
+    //   provide: APP_FILTER,
+    //   useClass: MyExceptionFilter
+    // },
+    // {
+    //   provide: APP_FILTER,
+    //   useClass: ErrorExceptionFilter,
+    // },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: IsAdminGuard,
+    // },
+  ],
 })
 export class AppModule {}
+// export class AppModule implements NestModule {
+//   configure(consumer: MiddlewareConsumer) {
+//     consumer.apply(SimpleMiddleware).forRoutes({
+//       path: '*',
+//       method: RequestMethod.ALL,
+//     });
+//   }
+// }
