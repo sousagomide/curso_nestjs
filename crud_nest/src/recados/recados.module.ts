@@ -12,9 +12,14 @@ import { OnlyLowercaseLetterRegex } from 'src/common/regex/only-lowercase-letter
 import { ONLY_LOWERCASE_LETTERS_REGEX, REMOVE_SPACES_REGEX } from './recados.constants';
 import { RegexFactory } from 'src/common/regex/regex.factory';
 import { MyDynamicModule } from 'src/my-dynamic/my-dynamic.module';
+import { ConfigModule } from '@nestjs/config';
+import recadosConfig from './recados.config';
+import globalConfig from 'src/global-config/global.config';
 
 @Module({
   imports: [
+    // ConfigModule,
+    ConfigModule.forFeature(globalConfig),
     TypeOrmModule.forFeature([Recado]),
     forwardRef(() => PessoasModule),
     // MyDynamicModule.register({

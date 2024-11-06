@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Recado } from './entities/recado.entity';
 import { CreateRecadoDto } from './dto/create-recado.dto';
 import { UpdateRecadoDto } from './dto/update-recado.dto';
@@ -7,6 +7,10 @@ import { Repository } from 'typeorm';
 import { PessoasService } from 'src/pessoas/pessoas.service';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { RecadoUtils } from './recados.utils';
+import recadosConfig from './recados.config';
+import { ConfigType } from '@nestjs/config';
+import globalConfig from 'src/global-config/global.config';
+
 
 @Injectable()
 export class RecadosService {
@@ -14,11 +18,16 @@ export class RecadosService {
     @InjectRepository(Recado)
     private readonly recadoRepository: Repository<Recado>,
     private readonly pessoasService: PessoasService,
-    private readonly recadosUtils: RecadoUtils
+    private readonly recadosUtils: RecadoUtils,
+    // private readonly configService: ConfigService
+    @Inject(globalConfig.KEY)
+    private readonly globalConfiguration: ConfigType<typeof globalConfig>
   ) {}
 
   async findAll(paginationDto?: PaginationDto) {
     // console.log(this.recadosUtils.inverteString('gomide'));
+    // console.log(this.configService.get('DATABASE_USERNAME'));
+    // console.log(this.recadosConfiguration.teste1);
     const { limit = 10, offset = 0 } = paginationDto;
     const recados = await this.recadoRepository.find({
       take: limit,

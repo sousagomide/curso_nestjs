@@ -79,6 +79,18 @@
 			<td>Instalação do ORM e a biblioteca do postgresql</td>
 			<td><code>npm i @nestjs/typeorm typeorm pg</code></td>
 		</tr>
+		<tr>
+			<td>Cria um módulo de configuração</td>
+			<td><code>npm i @nestjs/config</code></td>
+		</tr>
+		<tr>
+			<td>Biblioteca usada para validação</td>
+			<td><code>npm i @hapi/joi</code></td>
+		</tr>
+		<tr>
+			<td>Para tipagem use do @hapi/joi</td>
+			<td><code>npm i -D @types/hapi__joi</code></td>
+		</tr>
 	</table>
 </div>
 
