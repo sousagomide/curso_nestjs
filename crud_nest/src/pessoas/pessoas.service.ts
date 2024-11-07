@@ -8,6 +8,7 @@ import { UpdatePessoaDto } from './dto/update-pessoa.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Pessoa } from './entities/pessoa.entity';
 import { Repository } from 'typeorm';
+import { HashingService } from 'src/auth/hashing/hashing.service';
 
 // Usa por padrão scope: Scope.DEFAULT
 // Scope.DEFAULT -> Usa um padrão singleton onde só uma instância é criada
@@ -18,13 +19,15 @@ export class PessoasService {
   constructor(
     @InjectRepository(Pessoa)
     private readonly pessoaRepository: Repository<Pessoa>,
+    private readonly hashingService: HashingService
   ) {}
 
   async create(createPessoaDto: CreatePessoaDto) {
     try {
+      const passwordHash = await this.hashingService.hash(createPessoaDto.password);
       const pessoaDto = {
         nome: createPessoaDto.nome,
-        passwordHash: createPessoaDto.password,
+        passwordHash: passwordHash,
         email: createPessoaDto.email,
       };
       const novaPessoa = this.pessoaRepository.create(pessoaDto);
@@ -52,9 +55,12 @@ export class PessoasService {
 
   async update(id: number, updatePessoaDto: UpdatePessoaDto) {
     const pessoaDto = {
-      nome: updatePessoaDto?.nome,
-      passwordHash: updatePessoaDto?.password,
+      nome: updatePessoaDto?.nome
     };
+    if (updatePessoaDto?.password) {
+      const passwordHash = await this.hashingService.hash(updatePessoaDto.password);
+      pessoaDto['passwordHash'] = passwordHash;
+    }
     const pessoa = await this.pessoaRepository.preload({ id, ...pessoaDto });
     if (pessoa) return this.pessoaRepository.save(pessoa);
     throw new NotFoundException('Pessoa não encontrada.');

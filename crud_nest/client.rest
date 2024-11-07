@@ -41,6 +41,7 @@ DELETE {{baseUrl}}/recados/3
 ### PessoasControllerFindAll
 # @name PessoasControllerFindAll
 GET {{baseUrl}}/{{rota_pessoa}}/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsImVtYWlsIjoicm9kcmlnby5nb21pZGVAaWZnb2lhbm8uZWR1LmJyIiwibm9tZSI6IlJvZHJpZ28gZGUgU291c2EgR29taWRlIiwiaWF0IjoxNzMwOTg3MjAwLCJleHAiOjE3MzA5OTA4MDAsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.9RMmXj30hH4q5VShF5w9VgjwWEnx1m3uheOFsJkkz08
 # ?limit=10
 # &offset=10
 
@@ -54,21 +55,40 @@ POST {{baseUrl}}/{{rota_pessoa}}/
 Content-Type: application/json
 
 {
-    "nome": "Rafaela do Vale Santos Gomide",
-    "email": "valegomide@gmail.com",
+    "nome": "Adson Rocha",
+    "email": "adson.rocha@ifgoiano.edu.br",
     "password": "123456"
 }
 
 ### PessoasControllerUpdate
 # @name PessoasControllerUpdate
-PATCH  {{baseUrl}}/{{rota_pessoa}}/2
+PATCH  {{baseUrl}}/{{rota_pessoa}}/8
 Content-Type: application/json
 
 {
-    "nome": "TESTE",
-    "password": "TESTE"
+    "password": "123456"
 }
 
 ### PessoasControllerRemove
 # @name PessoasControllerRemove
 DELETE {{baseUrl}}/{{rota_pessoa}}/6
+
+
+###########################################################################
+###########################################################################
+###########################################################################
+###############               Autenticação                  ###############
+###########################################################################
+###########################################################################
+###########################################################################
+@rota_auth = auth
+
+### AuthControllerLogin
+# @name AuthControllerLogin
+POST {{baseUrl}}/{{rota_auth}}/
+Content-Type: application/json
+
+{
+    "email": "rodrigo.gomide@ifgoiano.edu.br",
+    "password": "123456"
+}

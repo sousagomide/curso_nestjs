@@ -6,12 +6,18 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { PessoasService } from './pessoas.service';
 import { CreatePessoaDto } from './dto/create-pessoa.dto';
 import { UpdatePessoaDto } from './dto/update-pessoa.dto';
 import { RecadoUtils } from 'src/recados/recados.utils';
+import { AuthTokenGuard } from 'src/auth/guard/auth-token.guard';
+import { Request } from 'express';
+import { REQUEST_TOKEN_PAYLOAD_KEY } from 'src/auth/auth.constants';
 
+@UseGuards(AuthTokenGuard)
 @Controller('pessoas')
 export class PessoasController {
   constructor(
@@ -25,8 +31,9 @@ export class PessoasController {
   }
 
   @Get()
-  findAll() {
-    console.log(this.recadosUtils.inverteString('Method: findAll'));
+  findAll(@Req() req: Request) {
+    console.log(req[REQUEST_TOKEN_PAYLOAD_KEY]);
+    // console.log(this.recadosUtils.inverteString('Method: findAll'));
     return this.pessoasService.findAll();
   }
 

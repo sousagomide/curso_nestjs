@@ -10,6 +10,7 @@ import { ConfigModule, ConfigService, ConfigType } from '@nestjs/config';
 import { GlobalConfigModule } from './global-config/global-config.module';
 import * as Joi from '@hapi/joi';
 import appConfig from './app.config';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -61,6 +62,7 @@ import appConfig from './app.config';
     RecadosModule,
     PessoasModule,
     GlobalConfigModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [

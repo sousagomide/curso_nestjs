@@ -91,6 +91,18 @@
 			<td>Para tipagem use do @hapi/joi</td>
 			<td><code>npm i -D @types/hapi__joi</code></td>
 		</tr>
+		<tr>
+			<td>BCrypt é usado para trabalhar com autenticação</td>
+			<td><code>npm i bcryptjs</code></td>
+		</tr>
+		<tr>
+			<td>Bibliteca que define os tipos do BCrypt</td>
+			<td><code>npm i -D @types/bcryptjs</code></td>
+		</tr>
+		<tr>
+			<td>JWT é uma biblioteca de autenticação</td>
+			<td><code>npm i @nestjs/jwt</code></td>
+		</tr>
 	</table>
 </div>
 
