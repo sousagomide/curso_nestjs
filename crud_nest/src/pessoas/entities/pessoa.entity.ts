@@ -1,4 +1,5 @@
 import { IsEmail } from 'class-validator';
+import { RoutePolicies } from 'src/auth/enum/route-policies.enum';
 import { Recado } from 'src/recados/entities/recado.entity';
 import {
   Column,
@@ -33,4 +34,10 @@ export class Pessoa {
   createdAt?: Date;
   @UpdateDateColumn()
   updatedAt?: Date;
+
+  @Column({default: true})
+  isActive: boolean;
+
+  @Column({ type: 'simple-array', default: [] })
+  routePolicies: RoutePolicies[];
 }

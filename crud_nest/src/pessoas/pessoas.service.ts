@@ -1,5 +1,6 @@
 import {
   ConflictException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -9,6 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Pessoa } from './entities/pessoa.entity';
 import { Repository } from 'typeorm';
 import { HashingService } from 'src/auth/hashing/hashing.service';
+import { TokenPayloadDto } from 'src/auth/dto/token-payload.dto';
 
 // Usa por padrão scope: Scope.DEFAULT
 // Scope.DEFAULT -> Usa um padrão singleton onde só uma instância é criada
@@ -29,6 +31,7 @@ export class PessoasService {
         nome: createPessoaDto.nome,
         passwordHash: passwordHash,
         email: createPessoaDto.email,
+        routePolicies: createPessoaDto.routePolicies
       };
       const novaPessoa = this.pessoaRepository.create(pessoaDto);
       await this.pessoaRepository.save(novaPessoa);
@@ -43,6 +46,12 @@ export class PessoasService {
   async findAll() {
     const pessoas = await this.pessoaRepository.find({
       order: { nome: 'asc' },
+      select: {
+        email: true,
+        nome: true,
+        createdAt: true,
+        updatedAt: true
+      }
     });
     return pessoas;
   }
@@ -53,7 +62,7 @@ export class PessoasService {
     throw new NotFoundException('Pessoa não encontrada.');
   }
 
-  async update(id: number, updatePessoaDto: UpdatePessoaDto) {
+  async update(id: number, updatePessoaDto: UpdatePessoaDto, tokenPayload: TokenPayloadDto) {
     const pessoaDto = {
       nome: updatePessoaDto?.nome
     };
@@ -62,13 +71,18 @@ export class PessoasService {
       pessoaDto['passwordHash'] = passwordHash;
     }
     const pessoa = await this.pessoaRepository.preload({ id, ...pessoaDto });
+    if (pessoa.id !== tokenPayload.sub)
+      throw new ForbiddenException('Você não tem permissão para atualizar esse dados!');
     if (pessoa) return this.pessoaRepository.save(pessoa);
     throw new NotFoundException('Pessoa não encontrada.');
   }
 
-  async remove(id: number) {
+  async remove(id: number, tokenPayload: TokenPayloadDto) {
     const pessoa = await this.pessoaRepository.findOneBy({ id });
-    if (pessoa) return this.pessoaRepository.remove(pessoa);
-    throw new NotFoundException('Pessoa não encontrada.');
+    if (!pessoa)
+      throw new NotFoundException('Pessoa não encontrada.');
+    if (pessoa.id !== tokenPayload.sub)
+      throw new ForbiddenException('Você não tem permissão para atualizar esse dados!');
+    return this.pessoaRepository.remove(pessoa);
   }
 }

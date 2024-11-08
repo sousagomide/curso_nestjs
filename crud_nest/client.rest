@@ -1,4 +1,7 @@
 @baseUrl = http://localhost:3000
+@accessToken = {{AuthControllerLogin.response.body.accessToken}}
+@refreshToken = {{AuthControllerLogin.response.body.refreshToken}}
+
 
 # RECADOS
 ### RecadosControllerFindAll
@@ -10,22 +13,23 @@ Authorization: Bearer 123456
 
 ### RecadosControllerFindOne
 # @name RecadosControllerFindOne
-GET {{baseUrl}}/recados/12
+GET {{baseUrl}}/recados/13
 
 ### RecadosControllerCreate
 # @name RecadosControllerCreate
 POST {{baseUrl}}/recados/
+Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-    "texto": "Olá, tudo bem? Está ocupada?",
-    "deId": 7,
-    "paraId": 8
+    "texto": "Tem como abrir o lab4 para os alunos?",
+    "paraId": 10
 }
 
 ### RecadosControllerUpdate
 # @name RecadosControllerUpdate
-PATCH  {{baseUrl}}/recados/10
+PATCH  {{baseUrl}}/recados/13
+Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
@@ -34,20 +38,29 @@ Content-Type: application/json
 
 ### RecadosControllerRemove
 # @name RecadosControllerRemove
-DELETE {{baseUrl}}/recados/3
+DELETE {{baseUrl}}/recados/13
+Authorization: Bearer {{accessToken}}
 
-# PESSOAS
+
+###########################################################################
+###########################################################################
+###########################################################################
+###############               CRUD Pessoas                  ###############
+###########################################################################
+###########################################################################
+###########################################################################
 @rota_pessoa = pessoas
 ### PessoasControllerFindAll
 # @name PessoasControllerFindAll
 GET {{baseUrl}}/{{rota_pessoa}}/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjcsImVtYWlsIjoicm9kcmlnby5nb21pZGVAaWZnb2lhbm8uZWR1LmJyIiwibm9tZSI6IlJvZHJpZ28gZGUgU291c2EgR29taWRlIiwiaWF0IjoxNzMwOTg3MjAwLCJleHAiOjE3MzA5OTA4MDAsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMCJ9.9RMmXj30hH4q5VShF5w9VgjwWEnx1m3uheOFsJkkz08
+Authorization: Bearer {{accessToken}}
 # ?limit=10
 # &offset=10
 
 ### PessoasControllerFindOne
 # @name PessoasControllerFindOne
-GET {{baseUrl}}/{{rota_pessoa}}/2
+GET {{baseUrl}}/{{rota_pessoa}}/9
+Authorization: Bearer {{accessToken}}
 
 ### PessoasControllerCreate
 # @name PessoasControllerCreate
@@ -55,14 +68,16 @@ POST {{baseUrl}}/{{rota_pessoa}}/
 Content-Type: application/json
 
 {
-    "nome": "Adson Rocha",
-    "email": "adson.rocha@ifgoiano.edu.br",
-    "password": "123456"
+    "nome": "Eliakim da Silva Pinto",
+    "email": "eliakim.silva@ifgoiano.edu.br",
+    "password": "123456",
+    "routePolicies": ["createRecado", "findAllRecados"]
 }
 
 ### PessoasControllerUpdate
 # @name PessoasControllerUpdate
-PATCH  {{baseUrl}}/{{rota_pessoa}}/8
+PATCH  {{baseUrl}}/{{rota_pessoa}}/7
+Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
@@ -71,7 +86,8 @@ Content-Type: application/json
 
 ### PessoasControllerRemove
 # @name PessoasControllerRemove
-DELETE {{baseUrl}}/{{rota_pessoa}}/6
+DELETE {{baseUrl}}/{{rota_pessoa}}/7
+Authorization: Bearer {{accessToken}}
 
 
 ###########################################################################
@@ -89,6 +105,15 @@ POST {{baseUrl}}/{{rota_auth}}/
 Content-Type: application/json
 
 {
-    "email": "rodrigo.gomide@ifgoiano.edu.br",
+    "email": "eliakim.silva@ifgoiano.edu.br",
     "password": "123456"
+}
+
+### RefreshToken
+# @name RefreshToken
+POST {{baseUrl}}/{{rota_auth}}/refresh/
+Content-Type: application/json
+
+{
+    "refreshToken": "{{refreshToken}}"
 }

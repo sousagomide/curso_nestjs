@@ -10,6 +10,8 @@ import {
   Post,
   Query,
   Req,
+  SetMetadata,
+  UseGuards,
   UseInterceptors,
   UsePipes,
 } from '@nestjs/common';
@@ -23,6 +25,14 @@ import { RegexProtocol } from 'src/common/regex/regex.protocol';
 import { RemoveSpaceRegex } from 'src/common/regex/remove-space.regex';
 import { REMOVE_SPACES_REGEX } from './recados.constants';
 import { MY_DYNAMIC_CONFIG, MyDynamicModule, MyDynamicModuleConfigs } from 'src/my-dynamic/my-dynamic.module';
+import { AuthTokenGuard } from 'src/auth/guard/auth-token.guard';
+import { TokenPayloadParam } from 'src/auth/params/token-payload.param';
+import { TokenPayloadDto } from 'src/auth/dto/token-payload.dto';
+import { RoutePolicyGuard } from 'src/auth/guard/route-policy.guard';
+import { ROUTE_POLICY_KEY } from 'src/auth/auth.constants';
+import { SetRoutePolicy } from 'src/auth/decorators/set-route-policy.decorator';
+import { RoutePolicies } from 'src/auth/enum/route-policies.enum';
+import { AuthAndPolicyGuard } from 'src/auth/guard/auth-and-policy.guard';
 
 
 @Controller('recados')
@@ -48,6 +58,7 @@ export class RecadosController {
   //   @UseInterceptors(TimingConnectionInterceptor)
   //   @UseInterceptors(AuthTokenInterceptor)
   @Get()
+  //@SetRoutePolicy(RoutePolicies.findAllRecados)
   //findAll(@Query() paginationDto: PaginationDto, @UrlParam() url: string) {
   // findAll(@Query() paginationDto: PaginationDto, @ReqDataParam('method') reqData) {
   findAll(@Query() paginationDto: PaginationDto) {
@@ -67,18 +78,23 @@ export class RecadosController {
     return this.recadosService.findOne(id);
   }
 
+  //@UseGuards(AuthTokenGuard, RoutePolicyGuard)
+  @UseGuards(AuthAndPolicyGuard)
+  @SetRoutePolicy(RoutePolicies.createRecado)
   @Post()
-  create(@Body() body: CreateRecadoDto) {
-    return this.recadosService.create(body);
+  create(@Body() body: CreateRecadoDto, @TokenPayloadParam() tokenPayLoad: TokenPayloadDto) {
+    return this.recadosService.create(body, tokenPayLoad);
   }
 
+  @UseGuards(AuthTokenGuard)
   @Patch(':id')
-  update(@Param('id') id: number, @Body() body: UpdateRecadoDto) {
-    return this.recadosService.update(id, body);
+  update(@Param('id') id: number, @Body() body: UpdateRecadoDto, @TokenPayloadParam() tokenPayLoad: TokenPayloadDto) {
+    return this.recadosService.update(id, body, tokenPayLoad);
   }
 
+  @UseGuards(AuthTokenGuard)
   @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.recadosService.remove(id);
+  remove(@Param('id') id: number, @TokenPayloadParam() tokenPayLoad: TokenPayloadDto) {
+    return this.recadosService.remove(id, tokenPayLoad);
   }
 }

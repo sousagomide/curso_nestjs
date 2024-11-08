@@ -9,6 +9,8 @@ import { ConfigModule } from "@nestjs/config";
 import jwtConfig from "./config/jwt.config";
 import { JwtModule, JwtService } from "@nestjs/jwt";
 import { AuthTokenGuard } from "./guard/auth-token.guard";
+import { AuthAndPolicyGuard } from "./guard/auth-and-policy.guard";
+import { RoutePolicyGuard } from "./guard/route-policy.guard";
 
 @Global() //Não precisa importar o módulo em outros para usar
 @Module({
@@ -22,6 +24,8 @@ import { AuthTokenGuard } from "./guard/auth-token.guard";
     ],    
     providers: [
         AuthService,
+        AuthTokenGuard,
+        RoutePolicyGuard,
         {
             provide: HashingService,
             useClass: BcryptService
@@ -30,10 +34,13 @@ import { AuthTokenGuard } from "./guard/auth-token.guard";
     exports: [
         JwtModule,
         ConfigModule,
+        TypeOrmModule,
         {
             provide: HashingService,
             useClass: BcryptService
-        }
+        },
+        AuthTokenGuard,
+        RoutePolicyGuard
     ]
 })
 export class AuthModule {}

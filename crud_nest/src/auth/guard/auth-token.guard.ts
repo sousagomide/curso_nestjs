@@ -5,11 +5,16 @@ import { Observable } from "rxjs";
 import jwtConfig from "../config/jwt.config";
 import { ConfigType } from "@nestjs/config";
 import { REQUEST_TOKEN_PAYLOAD_KEY } from "../auth.constants";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { Pessoa } from "src/pessoas/entities/pessoa.entity";
 
 @Injectable()
 export class AuthTokenGuard implements CanActivate{
 
     constructor(
+        @InjectRepository(Pessoa)
+        private readonly pessoaRepository: Repository<Pessoa>,
         private readonly jwtService: JwtService,
         @Inject(jwtConfig.KEY)
         private readonly jwtConfiguration: ConfigType<typeof jwtConfig>
@@ -22,6 +27,10 @@ export class AuthTokenGuard implements CanActivate{
             throw new UnauthorizedException('Não logado!');
         try {
             const payload = await this.jwtService.verifyAsync(token, this.jwtConfiguration);
+            const pessoa = await this.pessoaRepository.findOneBy({id: payload.sub, isActive: true});
+            if (!pessoa)
+                throw new UnauthorizedException('Usuário não autorizado.');
+            payload['pessoa'] = pessoa;
             request[REQUEST_TOKEN_PAYLOAD_KEY] = payload;
         } catch(error) {
             throw new UnauthorizedException('Falha ao logar!');
