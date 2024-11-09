@@ -117,3 +117,43 @@ Content-Type: application/json
 {
     "refreshToken": "{{refreshToken}}"
 }
+
+
+###########################################################################
+###########################################################################
+###########################################################################
+###############               Upload Routes                 ###############
+###########################################################################
+###########################################################################
+###########################################################################
+@rota_upload = upload-picture
+
+### PessoaControllerUploadPicture
+# @name PessoaControllerUploadPicture
+POST {{baseUrl}}/{{rota_pessoa}}/{{rota_upload}}
+Authorization: Bearer {{accessToken}}
+Content-Type: multipart/form-data; boundary=----BoundaryDelimitadorHttp
+
+------BoundaryDelimitadorHttp
+Content-Disposition: form-data; name="file"; filename="profile.jpg"
+Content-Type: image/jpeg
+
+< ./dev/images/adriana.jpg
+------BoundaryDelimitadorHttp--
+
+### PessoaControllerUploadImageCloudinary
+# @name PessoaControllerUploadImageCloudinary
+POST {{baseUrl}}/{{rota_pessoa}}/upload-cloudinary
+Authorization: Bearer {{accessToken}}
+Content-Type: multipart/form-data; boundary=----BoundaryDelimitadorHttp
+
+------BoundaryDelimitadorHttp
+Content-Disposition: form-data; name="file"; filename="profile.jpg"
+Content-Type: image/jpeg
+
+< ./dev/images/adriana_antes.jpg
+------BoundaryDelimitadorHttp--
+
+
+### PessoaControllerUploadPicture
+GET http://res.cloudinary.com/dao5cjwxj/image/upload/v1731111421/fomhdsgnf2ewm2rin5dp.jpg

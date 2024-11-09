@@ -11,6 +11,12 @@ import { Pessoa } from './entities/pessoa.entity';
 import { Repository } from 'typeorm';
 import { HashingService } from 'src/auth/hashing/hashing.service';
 import { TokenPayloadDto } from 'src/auth/dto/token-payload.dto';
+import { UploadApiErrorResponse, UploadApiResponse, v2 } from 'cloudinary';
+
+import * as path from 'path';
+import * as fs from 'fs/promises';
+import toStream = require('buffer-to-stream');
+
 
 // Usa por padrão scope: Scope.DEFAULT
 // Scope.DEFAULT -> Usa um padrão singleton onde só uma instância é criada
@@ -84,5 +90,44 @@ export class PessoasService {
     if (pessoa.id !== tokenPayload.sub)
       throw new ForbiddenException('Você não tem permissão para atualizar esse dados!');
     return this.pessoaRepository.remove(pessoa);
+  }
+
+  async uploadPicture(file: Express.Multer.File, tokenPayload: TokenPayloadDto) {
+    const pessoa = await this.findOne(tokenPayload.sub);
+    const fileExtension = path.extname(file.originalname).toLowerCase().substring(1);
+    const fileName = `${tokenPayload.sub}.${fileExtension}`;
+    const fileFullPath = path.resolve(process.cwd(), 'pictures', fileName);
+    await fs.writeFile(fileFullPath, file.buffer);
+    pessoa.picture = fileName;
+    this.pessoaRepository.save(pessoa);
+    return {
+      "fieldname": file.fieldname,
+      "originalname": file.originalname,
+      "mimetype": file.mimetype,
+      "buffer": {},
+      "size": file.size
+    }
+  }
+
+
+  async uploadImageCloudinary(file: Express.Multer.File, tokenPayload: TokenPayloadDto) {
+    const pessoa = await this.findOne(tokenPayload.sub);
+    await v2.uploader.destroy(pessoa.picture);
+    const image = this.sendImage(file, tokenPayload);
+    const imageName = (await image).public_id;
+    pessoa.picture = imageName;
+    this.pessoaRepository.save(pessoa);
+    return image;
+  }
+
+
+  async sendImage(file: Express.Multer.File, tokenPayload: TokenPayloadDto): Promise<UploadApiResponse | UploadApiErrorResponse> {
+    return new Promise((resolve, reject) => {
+      const upload = v2.uploader.upload_stream((error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      });
+      toStream(file.buffer).pipe(upload);
+    });
   }
 }

@@ -11,6 +11,11 @@ import { GlobalConfigModule } from './global-config/global-config.module';
 import * as Joi from '@hapi/joi';
 import appConfig from './app.config';
 import { AuthModule } from './auth/auth.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+
+import * as path from 'path'
+import { CLOUDINARY } from './app.constants';
+import { v2 } from 'cloudinary';
 
 @Module({
   imports: [
@@ -47,7 +52,7 @@ import { AuthModule } from './auth/auth.module';
           autoLoadEntities: appConfiguration.database.autoLoadEntities,
           synchronize: appConfiguration.database.synchronize
         }
-      }
+      },
     }),
     // TypeOrmModule.forRoot({
     //   type: process.env.DATABASE_TYPE as 'postgres',
@@ -62,11 +67,28 @@ import { AuthModule } from './auth/auth.module';
     RecadosModule,
     PessoasModule,
     GlobalConfigModule,
-    AuthModule
+    AuthModule,
+    ServeStaticModule.forRoot({
+      rootPath: path.resolve(__dirname, '..', 'pictures'),
+      serveRoot: '/pictures'
+    })
   ],
   controllers: [AppController],
   providers: [
-    AppService,
+    AppService, 
+    {
+      provide: CLOUDINARY,
+      inject: [appConfig.KEY],
+      useFactory: async(appConfiguration: ConfigType<typeof appConfig>) => {
+        return v2.config({
+          cloud_name: appConfiguration.cloudinary.cloud_name,
+          api_key: appConfiguration.cloudinary.api_key,
+          api_secret: appConfiguration.cloudinary.api_secret
+        });
+      }
+    }
+    
+  
     // {
     //   provide: APP_FILTER,
     //   useClass: MyExceptionFilter

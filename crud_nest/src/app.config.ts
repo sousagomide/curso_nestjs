@@ -11,5 +11,10 @@ export default registerAs('app', () => ({
         autoLoadEntities: Boolean(process.env.DATABASE_AUTOLOADENTITIES),
         synchronize: Boolean(process.env.DATABASE_SYNCHRONIZE)
     },
+    cloudinary: {
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET
+    },
     environment: process.env.NODE_ENV || 'development'
 }))

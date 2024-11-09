@@ -103,8 +103,25 @@
 			<td>JWT é uma biblioteca de autenticação</td>
 			<td><code>npm i @nestjs/jwt</code></td>
 		</tr>
+		<tr>
+			<td>Instalação dos tipos para o multer. O multer server para trabalhar com upload</td>
+			<td><code>npm i -D @types/multer</code></td>
+		</tr>
+		<tr>
+			<td>Usado para trabalhar com arquivos estáticos</td>
+			<td><code>npm i --save @nestjs/serve-static</code></td>
+		</tr>
+		<tr>
+			<td>Enviar imagens para o cloudinary</td>
+			<td><code>npm i cloudinary buffer-to-stream</code></td>
+		</tr>
 	</table>
 </div>
+
+<h2>Bibliotecas recomendadas</h2>
+<ul>
+    <li>file-type image-type sharp: usadas para identificação de imagens pelo buffer</li>
+</ul>
 
 
 
