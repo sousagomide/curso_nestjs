@@ -2,6 +2,13 @@
 @accessToken = {{AuthControllerLogin.response.body.accessToken}}
 @refreshToken = {{AuthControllerLogin.response.body.refreshToken}}
 
+# TESTE
+### Testando
+# @name Testando
+GET {{baseUrl}}
+
+
+
 
 # RECADOS
 ### RecadosControllerFindAll
@@ -22,8 +29,8 @@ Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-    "texto": "Tem como abrir o lab4 para os alunos?",
-    "paraId": 10
+    "texto": "Olá, como foi de férias?",
+    "paraId": 11
 }
 
 ### RecadosControllerUpdate
@@ -68,8 +75,8 @@ POST {{baseUrl}}/{{rota_pessoa}}/
 Content-Type: application/json
 
 {
-    "nome": "Eliakim da Silva Pinto",
-    "email": "eliakim.silva@ifgoiano.edu.br",
+    "nome": "Rodrigo de Sousa Gomide",
+    "email": "sousagomide@gmail.com",
     "password": "123456",
     "routePolicies": ["createRecado", "findAllRecados"]
 }
@@ -105,7 +112,7 @@ POST {{baseUrl}}/{{rota_auth}}/
 Content-Type: application/json
 
 {
-    "email": "eliakim.silva@ifgoiano.edu.br",
+    "email": "sousagomide@gmail.com",
     "password": "123456"
 }
 

@@ -12,6 +12,8 @@ import { ConfigType } from '@nestjs/config';
 import globalConfig from 'src/global-config/global.config';
 import { TokenPayloadParam } from 'src/auth/params/token-payload.param';
 import { TokenPayloadDto } from 'src/auth/dto/token-payload.dto';
+import { EmailService } from 'src/email/email.service';
+import { ResponseRecadoDto } from './dto/response-recado.dto';
 
 
 @Injectable()
@@ -21,12 +23,13 @@ export class RecadosService {
     private readonly recadoRepository: Repository<Recado>,
     private readonly pessoasService: PessoasService,
     private readonly recadosUtils: RecadoUtils,
+    private readonly emailService: EmailService,
     // private readonly configService: ConfigService
     @Inject(globalConfig.KEY)
     private readonly globalConfiguration: ConfigType<typeof globalConfig>
   ) {}
 
-  async findAll(paginationDto?: PaginationDto) {
+  async findAll(paginationDto?: PaginationDto): Promise<ResponseRecadoDto[]> {
     // console.log(this.recadosUtils.inverteString('gomide'));
     // console.log(this.configService.get('DATABASE_USERNAME'));
     // console.log(this.recadosConfiguration.teste1);
@@ -43,7 +46,7 @@ export class RecadosService {
     return recados;
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<ResponseRecadoDto> {
     const recado = await this.recadoRepository.findOne({
       where: { id },
       relations: ['de', 'para'],
@@ -57,7 +60,7 @@ export class RecadosService {
     throw new NotFoundException('Recado não encontrado.');
   }
 
-  async create(createRecadoDto: CreateRecadoDto, @TokenPayloadParam() tokenPayLoad: TokenPayloadDto) {
+  async create(createRecadoDto: CreateRecadoDto, @TokenPayloadParam() tokenPayLoad: TokenPayloadDto): Promise<ResponseRecadoDto> {
     const { paraId } = createRecadoDto;
     const de = await this.pessoasService.findOne(tokenPayLoad.sub);
     const para = await this.pessoasService.findOne(paraId);
@@ -71,6 +74,7 @@ export class RecadosService {
     };
     const recado = this.recadoRepository.create(newRecado);
     await this.recadoRepository.save(recado);
+    this.emailService.sendEmail(para.email, `Você recebeu um recado de ${de.nome}`, createRecadoDto.texto);
     return {
       ...recado,
       de: { 
@@ -84,7 +88,7 @@ export class RecadosService {
     };
   }
 
-  async update(id: number, updateRecadoDto: UpdateRecadoDto, @TokenPayloadParam() tokenPayLoad: TokenPayloadDto) {
+  async update(id: number, updateRecadoDto: UpdateRecadoDto, @TokenPayloadParam() tokenPayLoad: TokenPayloadDto): Promise<ResponseRecadoDto> {
     const recado = await this.findOne(id);
     if (recado.de.id !== tokenPayLoad.sub)
       throw new ForbiddenException('Não possui permissão!');
@@ -94,12 +98,13 @@ export class RecadosService {
     throw new NotFoundException('Recado não encontrado.');
   }
 
-  async remove(id: number, @TokenPayloadParam() tokenPayLoad: TokenPayloadDto) {
+  async remove(id: number, @TokenPayloadParam() tokenPayLoad: TokenPayloadDto): Promise<ResponseRecadoDto> {
     const recado = await this.findOne(id);
     if (!recado)
       throw new NotFoundException('Recado não encontrado.');
     if (recado.de.id !== tokenPayLoad.sub)
       throw new ForbiddenException('Não possui permissão!');
-    return await this.recadoRepository.remove(recado);
+    await this.recadoRepository.delete(recado.id);
+    return recado;
   }
 }

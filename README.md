@@ -115,6 +115,26 @@
 			<td>Enviar imagens para o cloudinary</td>
 			<td><code>npm i cloudinary buffer-to-stream</code></td>
 		</tr>
+		<tr>
+			<td>Permite trabalhar com protocolo de segurança no cabeçalho</td>
+			<td><code>npm i helmet</code></td>
+		</tr>
+		<tr>
+			<td>Usado para limitar a quantidade de requisições por segundo</td>
+			<td><code>npm i --save @nestjs/throttler</code></td>
+		</tr>
+		<tr>
+			<td>Biblioteca para gerenciamento de e-mail: Nodemailer</td>
+			<td><code>npm i nodemailer</code></td>
+		</tr>
+		<tr>
+			<td>Tipagem do Nodemailer</td>
+			<td><code>npm i @types/nodemailer</code></td>
+		</tr>
+		<tr>
+			<td>Instalação do Swagger</td>
+			<td><code>npm i @nestjs/swagger swagger-ui-express</code></td>
+		</tr>
 	</table>
 </div>
 
@@ -159,3 +179,16 @@
     <li>REST API</li>
 	<li>CRUD entry points? Y</li>
 </ul>
+
+<h1>Para construir o build de uma aplicação finalizada</h1>
+
+<code>
+    npm run build
+</code>
+
+<h1>Site para trabalhar com envio de e-mail gratuito</h1>
+<ul>
+    <li>mailtrap: https://mailtrap.io/</li>
+	<li>ethereal: https://ethereal.email/</li>
+</ul>
+

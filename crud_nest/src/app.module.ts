@@ -16,6 +16,9 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import * as path from 'path'
 import { CLOUDINARY } from './app.constants';
 import { v2 } from 'cloudinary';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -36,6 +39,11 @@ import { v2 } from 'cloudinary';
     //   //   DATABASE_SYNCHRONIZE: Joi.number().min(0).max(1).default(0)
     //   // })
     // }),
+    ThrottlerModule.forRoot([{
+      ttl: 60000,
+      limit: 10,
+      blockDuration: 5000
+    }]),
     ConfigModule.forRoot(),
     ConfigModule.forFeature(appConfig),
     TypeOrmModule.forRootAsync({
@@ -71,7 +79,8 @@ import { v2 } from 'cloudinary';
     ServeStaticModule.forRoot({
       rootPath: path.resolve(__dirname, '..', 'pictures'),
       serveRoot: '/pictures'
-    })
+    }),
+    EmailModule
   ],
   controllers: [AppController],
   providers: [
@@ -86,6 +95,10 @@ import { v2 } from 'cloudinary';
           api_secret: appConfiguration.cloudinary.api_secret
         });
       }
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard
     }
     
   

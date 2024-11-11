@@ -33,8 +33,9 @@ import { ROUTE_POLICY_KEY } from 'src/auth/auth.constants';
 import { SetRoutePolicy } from 'src/auth/decorators/set-route-policy.decorator';
 import { RoutePolicies } from 'src/auth/enum/route-policies.enum';
 import { AuthAndPolicyGuard } from 'src/auth/guard/auth-and-policy.guard';
+import { ApiBearerAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-
+@ApiTags('recados')
 @Controller('recados')
 // @UseInterceptors(AddHeaderInterceptor, ErrorHandlingInterceptor, SimpleCacheInterceptor, ChangeDataInterceptor) //Pode ser usado no método
 @UsePipes(ParseIntIdPipe)
@@ -58,6 +59,20 @@ export class RecadosController {
   //   @UseInterceptors(TimingConnectionInterceptor)
   //   @UseInterceptors(AuthTokenInterceptor)
   @Get()
+  @ApiOperation({ summary: 'Obter todos os recados com paginação.' })
+  @ApiQuery({
+    name: 'offset',
+    required: false,
+    example: 0,
+    description: 'Número da página inicial'
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    example: 10,
+    description: 'Limite de itens por página'
+  })
+  @ApiResponse({ status: 200, description: 'Recados retornados com sucesso.' })
   //@SetRoutePolicy(RoutePolicies.findAllRecados)
   //findAll(@Query() paginationDto: PaginationDto, @UrlParam() url: string) {
   // findAll(@Query() paginationDto: PaginationDto, @ReqDataParam('method') reqData) {
@@ -80,6 +95,7 @@ export class RecadosController {
 
   //@UseGuards(AuthTokenGuard, RoutePolicyGuard)
   @UseGuards(AuthAndPolicyGuard)
+  @ApiBearerAuth()
   @SetRoutePolicy(RoutePolicies.createRecado)
   @Post()
   create(@Body() body: CreateRecadoDto, @TokenPayloadParam() tokenPayLoad: TokenPayloadDto) {

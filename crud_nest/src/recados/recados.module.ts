@@ -15,10 +15,12 @@ import { MyDynamicModule } from 'src/my-dynamic/my-dynamic.module';
 import { ConfigModule } from '@nestjs/config';
 import recadosConfig from './recados.config';
 import globalConfig from 'src/global-config/global.config';
+import { EmailModule } from 'src/email/email.module';
 
 @Module({
   imports: [
     // ConfigModule,
+    EmailModule,
     ConfigModule.forFeature(globalConfig),
     TypeOrmModule.forFeature([Recado]),
     forwardRef(() => PessoasModule),

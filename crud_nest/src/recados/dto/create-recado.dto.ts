@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsNotEmpty,
   IsPositive,
@@ -7,6 +8,12 @@ import {
 } from 'class-validator';
 
 export class CreateRecadoDto {
+  @ApiProperty({
+    example: 'Este é um recado de exemplo',
+    description: 'O conteúdo textaul do recado',
+    minLength: 5,
+    maxLength: 255
+  })
   @IsString({
     message: 'Texto precisa ser uma string',
   })
